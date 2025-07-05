@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Declara Fácil | Atendimento em todo Brasil</title>
 
-    <!-- Tailwind CSS para estilização via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Estilos personalizados -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -23,50 +20,39 @@
 
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- ============================================= -->
-    <!-- CABEÇALHO (HEADER)                            -->
-    <!-- ============================================= -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-blue-800">Declara Fácil</h1>
+            <h1 class="text-xl sm:text-2xl font-bold text-blue-800">Declara Fácil</h1>
             <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 hidden md:block">
                 Fale no WhatsApp
             </a>
         </div>
     </header>
 
-    <!-- ============================================= -->
-    <!-- CONTEÚDO PRINCIPAL (MAIN)                     -->
-    <!-- ============================================= -->
     <main class="container mx-auto px-6 py-12">
 
-        <!-- Seção Inicial (Hero) -->
-        <section class="text-center mb-20">
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">Resolva suas pendências com a Receita Federal sem dor de cabeça.</h2>
-            <p class="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">Imposto de Renda, CPF irregular, abertura de MEI e mais. Atendimento rápido, acessível e de confiança em Recife e para todo o Brasil.</p>
+        <section class="text-center mb-16 sm:mb-20">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">Resolva suas pendências com a Receita Federal sem dor de cabeça.</h2>
+            <p class="text-base sm:text-lg text-gray-600 mb-8 max-w-3xl mx-auto">Imposto de Renda, CPF irregular, abertura de MEI e mais. Atendimento rápido, acessível e de confiança em Recife e para todo o Brasil.</p>
             <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-green-600 transition duration-300 shadow-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z" /></svg>
                 Quero regularizar minha situação
             </a>
         </section>
 
-        <!-- Seção de Serviços -->
-        <section id="servicos" class="mb-20">
-            <h3 class="text-3xl font-bold text-center mb-10">Nossos Serviços</h3>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Serviço 1: IRPF -->
+        <section id="servicos" class="mb-16 sm:mb-20">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-10">Nossos Serviços</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
                     <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
                     <h4 class="text-xl font-bold mb-2">Declaração de Imposto de Renda</h4>
                     <p class="text-gray-600">Faça sua declaração (IRPF) com segurança e evite cair na malha fina. Análise completa para garantir o preenchimento correto.</p>
                 </div>
-                <!-- Serviço 2: CPF -->
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
                     <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4" /></svg></div>
                     <h4 class="text-xl font-bold mb-2">Regularização de CPF</h4>
                     <p class="text-gray-600">Seu CPF está suspenso ou pendente? Resolvo a situação de forma rápida para você não ter problemas com bancos e concursos.</p>
                 </div>
-                <!-- Serviço 3: MEI -->
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
                     <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
                     <h4 class="text-xl font-bold mb-2">Abertura e Suporte MEI</h4>
@@ -75,10 +61,9 @@
             </div>
         </section>
 
-        <!-- Seção "Como Funciona" -->
-        <section class="bg-blue-800 text-white p-12 rounded-lg mb-20">
-            <h3 class="text-3xl font-bold text-center mb-10">É simples resolver sua situação</h3>
-            <div class="grid md:grid-cols-3 gap-8 text-center">
+        <section class="bg-blue-800 text-white p-8 sm:p-12 rounded-lg mb-16 sm:mb-20">
+            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-10">É simples resolver sua situação</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
                     <div class="text-3xl font-bold mb-2">1.</div>
                     <h4 class="text-xl font-semibold mb-2">Contato Inicial</h4>
@@ -97,27 +82,19 @@
             </div>
         </section>
 
-        <!-- Seção "Sobre Mim" -->
-        <section id="sobre" class="mb-20 flex flex-col md:flex-row items-center gap-10">
+        <section id="sobre" class="mb-16 sm:mb-20 flex flex-col md:flex-row items-center gap-10">
             <div class="md:w-1/3">
-                <!-- 
-                  CORREÇÃO FINAL: O caminho agora aponta para a pasta "assets", 
-                  que é onde a sua foto está localizada.
-                -->
-                <img src="assets/perfil.jpg" 
-                     alt="Foto de Adelson Elias, especialista da Declara Fácil" 
-                     class="rounded-full shadow-lg mx-auto w-64 h-64 object-cover">
+                <img src="assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover">
             </div>
-            <div class="md:w-2/3">
-                <h3 class="text-3xl font-bold mb-4">Atendimento com confiança e clareza</h3>
+            <div class="md:w-2/3 text-center md:text-left">
+                <h3 class="text-2xl sm:text-3xl font-bold mb-4">Atendimento com confiança e clareza</h3>
                 <p class="text-gray-600 mb-4">Meu nome é Adelson Elias, realizo assessoria para imposto de renda há 14 anos. Meu objetivo no Declara Fácil é oferecer um serviço acessível, transparente e fácil, sem burocracia, onde você se sente seguro.</p>
                 <p class="text-gray-600">Ter a vida financeira em dia é uma conquista. Estou aqui para ser o parceiro que facilita essa jornada para você.</p>
             </div>
         </section>
 
-        <!-- Chamada Final para Ação (CTA) -->
-        <section class="text-center bg-white p-12 rounded-lg shadow-xl">
-            <h3 class="text-3xl font-bold mb-4">Pronto para ficar em dia?</h3>
+        <section class="text-center bg-white p-8 sm:p-12 rounded-lg shadow-xl">
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Pronto para ficar em dia?</h3>
             <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Não deixe para depois. Uma pendência simples pode se tornar um grande problema. Me chame agora e vamos resolver isso juntos.</p>
             <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-green-600 transition duration-300 shadow-lg">
                 Falar comigo no WhatsApp
@@ -126,13 +103,17 @@
 
     </main>
 
-    <!-- ============================================= -->
-    <!-- RODAPÉ (FOOTER)                               -->
-    <!-- ============================================= -->
+    <a href="https://wa.me/5581998721990" target="_blank" class="md:hidden fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded-full shadow-lg z-50">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.233 2.003c-4.417 0-8 3.582-8 8 0 1.62.48 3.123 1.326 4.395l-1.42 1.42a.5.5 0 00.354.854l2.12-.424a.5.5 0 00.353-.354l.425-2.12a.5.5 0 00-.854-.353l-1.42 1.42A6.97 6.97 0 013.233 10c0-3.86 3.14-7 7-7s7 3.14 7 7a6.97 6.97 0 01-1.07 3.75l1.42 1.42a.5.5 0 00.354.854l2.12-.424a.5.5 0 00.353-.354l.425-2.12a.5.5 0 00-.854-.353l-1.42 1.42A7.96 7.96 0 0018.233 10c0-4.418-3.582-8-8-8z" />
+            <path fill-rule="evenodd" d="M4.684 11.233c.27.53.662 1.01 1.143 1.423l.012.012c.118.1.24.192.368.277.26.173.54.316.837.422.3.107.614.17.936.187h.03c.318 0 .63-.062.926-.18l.015-.006c.294-.112.57-.26.82-.43l.024-.016c.12-.084.234-.176.34-.277l.012-.012c.48-.413.873-.893 1.143-1.423l.015-.028a5.03 5.03 0 00.493-2.133c0-.326-.03-.646-.09-1.05l-.01-.063c-.07-.365-.18-.71-.32-1.03l-.02-.04zM8.233 7.5a.5.5 0 00-1 0v4a.5.5 0 001 0v-4zm2 0a.5.5 0 00-1 0v4a.5.5 0 001 0v-4zm2 0a.5.5 0 00-1 0v4a.5.5 0 001 0v-4z" clip-rule="evenodd" />
+        </svg>
+    </a>
+
     <footer class="bg-gray-800 text-white mt-12">
         <div class="container mx-auto px-6 py-6 text-center">
             <p class="font-bold">Declara Fácil</p>
-            <p class="text-sm text-gray-400">Atendimento em Recife-PE e online para todo o Brasil 81 9 9872 - 1990 .</p>
+            <p class="text-sm text-gray-400">Atendimento em Recife-PE e online para todo o Brasil: <a href="tel:+5581998721990" class="hover:underline">81 99872-1990</a>.</p>
             <p class="text-sm text-gray-400 mt-4">&copy; 2025 Declara Fácil. Todos os direitos reservados.</p>
         </div>
     </footer>
