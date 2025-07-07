@@ -2,12 +2,13 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <!-- CORREÇÃO: Viewport meta tag é essencial para o design responsivo -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Declara Fácil | Atendimento em todo Brasil</title>
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
@@ -16,15 +17,34 @@
         body {
             font-family: 'Poppins', sans-serif;
         }
+        /* Custom Tailwind Config (opcional, para cores da marca) */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-yellow': '#FFC700',
+                        'brand-dark': '#374151',
+                    }
+                }
+            }
+        }
     </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
 
+    <!-- CABEÇALHO ATUALIZADO COM LOGO -->
     <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl sm:text-2xl font-bold text-blue-800">Declara Fácil</h1>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300 hidden md:block">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- Logo e Nome da Empresa -->
+            <div class="flex items-center gap-3">
+                <!-- IMPORTANTE: Salve sua logo como 'logo.png' na pasta 'assets' -->
+                <img src="assets/logo.png" alt="Logotipo Declara Fácil" class="h-10 sm:h-12">
+                <span class="text-xl sm:text-2xl font-bold text-gray-800 hidden sm:block">Declara Fácil</span>
+            </div>
+            <!-- Botão WhatsApp (Desktop) -->
+            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition duration-300 hidden md:flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943s-.182-.133-.38-.232z"/></svg>
                 Fale no WhatsApp
             </a>
         </div>
@@ -32,84 +52,94 @@
 
     <main class="container mx-auto px-6 py-12">
 
+        <!-- SEÇÃO PRINCIPAL -->
         <section class="text-center mb-16 sm:mb-20">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">Resolva suas pendências com a Receita Federal sem dor de cabeça.</h2>
             <p class="text-base sm:text-lg text-gray-600 mb-8 max-w-3xl mx-auto">Imposto de Renda, CPF irregular, abertura de MEI e mais. Atendimento rápido, acessível e de confiança em Recife e para todo o Brasil.</p>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-green-600 transition duration-300 shadow-lg">
+            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg inline-flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z" /></svg>
                 Quero regularizar
             </a>
         </section>
 
+        <!-- SEÇÃO DE SERVIÇOS -->
         <section id="servicos" class="mb-16 sm:mb-20">
-            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-10">Nossos Serviços</h3>
+            <h3 class="text-2xl sm:text-3xl font-bold text-center mb-10 text-gray-900">Nossos Serviços</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card Serviço 1 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                    <h4 class="text-xl font-bold mb-2">Declaração de Imposto de Renda</h4>
+                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                    <h4 class="text-xl font-bold mb-2 text-gray-900">Declaração de Imposto de Renda</h4>
                     <p class="text-gray-600">Faça sua declaração (IRPF) com segurança e evite cair na malha fina. Análise completa para garantir o preenchimento correto.</p>
                 </div>
+                <!-- Card Serviço 2 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4" /></svg></div>
-                    <h4 class="text-xl font-bold mb-2">Regularização de CPF</h4>
+                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4" /></svg></div>
+                    <h4 class="text-xl font-bold mb-2 text-gray-900">Regularização de CPF</h4>
                     <p class="text-gray-600">Seu CPF está suspenso ou pendente? Resolvo a situação de forma rápida para você não ter problemas com bancos e concursos.</p>
                 </div>
+                <!-- Card Serviço 3 -->
                 <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-blue-800 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
-                    <h4 class="text-xl font-bold mb-2">Abertura e Suporte MEI</h4>
+                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+                    <h4 class="text-xl font-bold mb-2 text-gray-900">Abertura e Suporte MEI</h4>
                     <p class="text-gray-600">Abra seu CNPJ como Microempreendedor Individual e conte com suporte para emissão de guias e declaração anual.</p>
                 </div>
             </div>
         </section>
 
-        <section class="bg-blue-800 text-white p-8 sm:p-12 rounded-lg mb-16 sm:mb-20">
+        <!-- SEÇÃO "COMO FUNCIONA" -->
+        <section class="bg-gray-800 text-white p-8 sm:p-12 rounded-lg mb-16 sm:mb-20">
             <h3 class="text-2xl sm:text-3xl font-bold text-center mb-10">É simples resolver sua situação</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                 <div>
-                    <div class="text-3xl font-bold mb-2">1.</div>
+                    <div class="text-3xl font-bold mb-2 text-yellow-400">1.</div>
                     <h4 class="text-xl font-semibold mb-2">Contato Inicial</h4>
                     <p class="opacity-80">Você me chama no WhatsApp e explica sua necessidade. O primeiro atendimento é sem compromisso.</p>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold mb-2">2.</div>
+                    <div class="text-3xl font-bold mb-2 text-yellow-400">2.</div>
                     <h4 class="text-xl font-semibold mb-2">Análise e Documentos</h4>
                     <p class="opacity-80">Eu oriento sobre os documentos necessários. Você envia tudo online, com total segurança e sigilo.</p>
                 </div>
                 <div>
-                    <div class="text-3xl font-bold mb-2">3.</div>
+                    <div class="text-3xl font-bold mb-2 text-yellow-400">3.</div>
                     <h4 class="text-xl font-semibold mb-2">Problema Resolvido</h4>
                     <p class="opacity-80">Realizo o serviço e entrego o comprovante. Tudo resolvido de forma rápida e transparente.</p>
                 </div>
             </div>
         </section>
 
+        <!-- SEÇÃO SOBRE -->
         <section id="sobre" class="mb-16 sm:mb-20 flex flex-col md:flex-row items-center gap-10">
             <div class="md:w-1/3">
-                <img src="assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover">
+                <!-- IMPORTANTE: Coloque sua foto de perfil na pasta 'assets' -->
+                <img src="assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/256x256/EFEFEF/374151?text=Perfil';">
             </div>
             <div class="md:w-2/3 text-center md:text-left">
-                <h3 class="text-2xl sm:text-3xl font-bold mb-4">Atendimento com confiança e clareza</h3>
+                <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Atendimento com confiança e clareza</h3>
                 <p class="text-gray-600 mb-4">Meu nome é Adelson Elias, realizo assessoria para imposto de renda há 14 anos. Meu objetivo no Declara Fácil é oferecer um serviço acessível, transparente e fácil, sem burocracia, onde você se sente seguro.</p>
                 <p class="text-gray-600">Ter a vida financeira em dia é uma conquista. Estou aqui para ser o parceiro que facilita essa jornada para você.</p>
             </div>
         </section>
 
+        <!-- SEÇÃO FINAL DE CTA -->
         <section class="text-center bg-white p-8 sm:p-12 rounded-lg shadow-xl">
-            <h3 class="text-2xl sm:text-3xl font-bold mb-4">Pronto para ficar em dia?</h3>
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Pronto para ficar em dia?</h3>
             <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Não deixe para depois. Uma pendência simples pode se tornar um grande problema. Me chame agora e vamos resolver isso juntos.</p>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-green-500 text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-green-600 transition duration-300 shadow-lg">
+            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg">
                 Falar comigo
             </a>
         </section>
 
     </main>
 
-    <!-- CORREÇÃO: BOTÃO DE WHATSAPP FLUTUANTE COM IMAGEM -->
-    <a href="https://wa.me/5581998721990" target="_blank" class="md:hidden fixed bottom-5 right-5 bg-green-500 rounded-full shadow-lg z-50 p-3 flex items-center justify-center">
-        <!-- A tag <svg> foi trocada por uma tag <img> que aponta para o seu arquivo de logo -->
-        <img src="assets/Whattsapp-logo.png" alt="Fale no WhatsApp" class="h-8 w-8">
+    <!-- BOTÃO DE WHATSAPP FLUTUANTE (MOBILE) -->
+    <a href="https://wa.me/5581998721990" target="_blank" class="md:hidden fixed bottom-5 right-5 bg-yellow-400 rounded-full shadow-lg z-50 p-3 flex items-center justify-center">
+        <!-- Ícone do WhatsApp -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-whatsapp text-gray-900" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943s-.182-.133-.38-.232z"/></svg>
     </a>
 
+    <!-- RODAPÉ -->
     <footer class="bg-gray-800 text-white mt-12">
         <div class="container mx-auto px-6 py-6 text-center">
             <p class="font-bold">Declara Fácil</p>
