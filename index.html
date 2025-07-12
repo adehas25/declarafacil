@@ -5,183 +5,336 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Declara Fácil | Atendimento em todo Brasil</title>
 
+    <!-- Meta Tags de SEO e Redes Sociais -->
     <meta property="og:title" content="Declara Fácil | Atendimento em todo Brasil">
-    
     <meta property="og:description" content="Resolva suas pendências com a Receita Federal sem dor de cabeça. Imposto de Renda, CPF irregular, MEI e mais.">
-    
     <meta property="og:image" content="https://adehas25.github.io/declarafacil/assets/logo.png">
-    
     <meta property="og:url" content="https://adehas25.github.io/declarafacil/">
-    
     <meta property="og:type" content="website">
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Declara Fácil | Atendimento em todo Brasil">
     <meta name="twitter:description" content="Resolva suas pendências com a Receita Federal sem dor de cabeça. Imposto de Renda, CPF irregular, MEI e mais.">
     <meta name="twitter:image" content="https://adehas25.github.io/declarafacil/assets/logo.png">
 
+    <!-- Favicon -->
     <link rel="icon" href="https://adehas25.github.io/declarafacil/assets/logo.png" type="image/png">
 
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Chart.js para os Guias -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Estilos Personalizados -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
         }
+        html { scroll-behavior: smooth; }
+        
+        /* Estilos para o Guia MEI */
+        .nav-link-mei.active { color: #facc15; border-bottom-color: #facc15; }
+        .nav-link-mei.inactive { border-bottom-color: transparent; }
+        .benefit-card { transition: all 0.3s ease-in-out; }
+        .benefit-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        
+        /* Estilos para o Guia Score */
+        .nav-link-score { transition: all 0.3s ease; }
+        .nav-link-score.active {
+            color: #eab308; /* Amarelo mais escuro */
+            font-weight: 700;
+            transform: scale(1.1);
+        }
+        .flip-card { perspective: 1000px; }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 0.75rem;
+        }
+        .flip-card-back { transform: rotateY(180deg); }
+        .score-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        
+        @media (min-width: 640px) {
+            .score-chart-container { height: 380px; }
+        }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
     </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800">
 
+    <!-- CABEÇALHO UNIFICADO -->
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <a href="#" class="flex items-center gap-3">
-                <img src="assets/logo.png" alt="Logotipo Declara Fácil" class="h-10 sm:h-12" onerror="this.onerror=null;this.src='https://placehold.co/150x50/EFEFEF/374151?text=Logo';">
+            <a href="#" onclick="showPage('pagina-principal')" class="flex items-center gap-3 cursor-pointer">
+                <img src="https://adehas25.github.io/declarafacil/assets/logo.png" alt="Logotipo Declara Fácil" class="h-10 sm:h-12" onerror="this.onerror=null;this.src='https://placehold.co/150x50/EFEFEF/374151?text=Logo';">
                 <span class="text-xl sm:text-2xl font-bold text-gray-900">Declara Fácil</span>
             </a>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition duration-300 hidden md:flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943s-.182-.133-.38-.232z"/></svg>
-                Fale no WhatsApp
-            </a>
+            <div class="flex items-center gap-4">
+                 <a href="#" onclick="showPage('pagina-guia-mei')" class="text-gray-600 font-semibold hover:text-yellow-500 transition duration-300 hidden sm:block">Guia MEI</a>
+                 <a href="#" onclick="showPage('pagina-guia-score')" class="text-gray-600 font-semibold hover:text-yellow-500 transition duration-300 hidden sm:block">Guia Score</a>
+                <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-yellow-500 transition duration-300 hidden md:flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943s-.182-.133-.38-.232z"/></svg>
+                    Fale no WhatsApp
+                </a>
+                 <button class="md:hidden" id="mobile-menu-button-main">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m4 6h-16" />
+                    </svg>
+                 </button>
+            </div>
+        </div>
+        <div id="mobile-menu-main" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#" onclick="showPage('pagina-guia-mei'); closeMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-yellow-500">Guia MEI</a>
+                <a href="#" onclick="showPage('pagina-guia-score'); closeMobileMenu();" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-yellow-500">Guia Score</a>
+            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
+    <!-- PÁGINA PRINCIPAL DO DECLARA FÁCIL -->
+    <div id="pagina-principal">
+        <main class="container mx-auto px-6 py-12">
 
-        <section class="text-center mb-16 sm:mb-20">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">Resolva suas pendências com a Receita Federal sem dor de cabeça.</h1>
-            <p class="text-base sm:text-lg text-gray-600 mb-8 max-w-3xl mx-auto">Imposto de Renda, CPF irregular, abertura de MEI e mais. Atendimento rápido, acessível e de confiança em Recife e para todo o Brasil.</p>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg inline-flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z" /></svg>
-                Quero regularizar
-            </a>
-        </section>
+            <section class="text-center mb-16 sm:mb-20">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight">Resolva suas pendências com a Receita Federal sem dor de cabeça.</h1>
+                <p class="text-base sm:text-lg text-gray-600 mb-8 max-w-3xl mx-auto">Imposto de Renda, CPF irregular, abertura de MEI e mais. Atendimento rápido, acessível e de confiança em Recife e para todo o Brasil.</p>
+                <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg inline-flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2V10a2 2 0 012-2h8z" /></svg>
+                    Quero regularizar
+                </a>
+            </section>
 
-        <section id="servicos" class="mb-16 sm:mb-20">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10 text-gray-900">Nossos Serviços</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Declaração de Imposto de Renda</h3>
-                    <p class="text-gray-600">Faça sua declaração (IRPF) com segurança e evite cair na malha fina. Análise completa para garantir o preenchimento correto.</p>
+            <section id="servicos" class="mb-16 sm:mb-20">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10 text-gray-900">Nossos Serviços</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
+                        <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Declaração de Imposto de Renda</h3>
+                        <p class="text-gray-600">Faça sua declaração (IRPF) com segurança e evite cair na malha fina.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
+                        <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Regularização de CPF</h3>
+                        <p class="text-gray-600">Resolvo a situação do seu CPF suspenso ou pendente de forma rápida.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
+                        <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Abertura e Suporte MEI</h3>
+                        <p class="text-gray-600">Abra seu CNPJ e conte com suporte para suas obrigações anuais.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center cursor-pointer" onclick="showPage('pagina-guia-mei')">
+                        <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v11.494m-9-5.747h18" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Guia da Previdência MEI</h3>
+                        <p class="text-gray-600">Entenda seus direitos no INSS. Acesse nosso guia interativo.</p>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2 flex flex-col items-center justify-center cursor-pointer" onclick="showPage('pagina-guia-score')">
+                        <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg></div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Guia do Score de Crédito</h3>
+                        <p class="text-gray-600">Aprenda a aumentar sua pontuação e ter mais crédito no mercado.</p>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 012-2h4a2 2 0 012 2v1m-4 0h4" /></svg></div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Regularização de CPF</h3>
-                    <p class="text-gray-600">Seu CPF está suspenso ou pendente? Resolvo a situação de forma rápida para você não ter problemas com bancos e concursos.</p>
+            </section>
+
+            <section id="precos" class="mb-16 sm:mb-20">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10 text-gray-900">Tabela de Preços</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Declaração Simples de Imposto de Renda</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 59,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Declaração Completa Imposto de Renda</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 199,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Abertura de MEI</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 149,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Revisão de Declaração de IRPF</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 39,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Consultar Situação do CPF</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 19,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
+                        <div><h3 class="text-lg font-bold mb-2 text-gray-900">Consultar Situação do CNPJ</h3><p class="text-4xl font-bold text-yellow-500 my-4">R$ 29,90</p></div>
+                        <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
+                    </div>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center transition-transform transform hover:-translate-y-2">
-                    <div class="text-yellow-500 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg></div>
-                    <h3 class="text-xl font-bold mb-2 text-gray-900">Abertura e Suporte MEI</h3>
-                    <p class="text-gray-600">Abra seu CNPJ como Microempreendedor Individual e conte com suporte para emissão de guias e declaração anual.</p>
+            </section>
+            <section class="bg-gray-800 text-white p-8 sm:p-12 rounded-lg mb-16 sm:mb-20">
+                <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10">É simples resolver sua situação</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div><div class="text-3xl font-bold mb-2 text-yellow-400">1.</div><h3 class="text-xl font-semibold mb-2">Contato Inicial</h3><p class="opacity-80">Você me chama no WhatsApp e explica sua necessidade. O primeiro atendimento é sem compromisso.</p></div>
+                    <div><div class="text-3xl font-bold mb-2 text-yellow-400">2.</div><h3 class="text-xl font-semibold mb-2">Análise e Documentos</h3><p class="opacity-80">Eu oriento sobre os documentos necessários. Você envia tudo online, com total segurança e sigilo.</p></div>
+                    <div><div class="text-3xl font-bold mb-2 text-yellow-400">3.</div><h3 class="text-xl font-semibold mb-2">Problema Resolvido</h3><p class="opacity-80">Realizo o serviço e entrego o comprovante. Tudo resolvido de forma rápida e transparente.</p></div>
+                </div>
+            </section>
+            <section id="sobre" class="mb-16 sm:mb-20 flex flex-col md:flex-row items-center gap-10">
+                <div class="md:w-1/3"><img src="https://adehas25.github.io/declarafacil/assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/256x256/EFEFEF/374151?text=Perfil';"></div>
+                <div class="md:w-2/3 text-center md:text-left"><h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Atendimento com confiança e clareza</h2><p class="text-gray-600 mb-4">Eu sou Adelson Elias e realizo assessoria para imposto de renda há 14 anos. Meu objetivo no Declara Fácil é oferecer um serviço acessível, transparente e fácil, sem burocracia, onde você se sente seguro.</p><p class="text-gray-600">Ter a vida financeira em dia é uma conquista. Estou aqui para ser o parceiro que facilita essa jornada para você.</p></div>
+            </section>
+            <section class="text-center bg-white p-8 sm:p-12 rounded-lg shadow-xl">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Pronto para ficar em dia?</h2>
+                <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Não deixe para depois. Uma pendência simples pode se tornar um grande problema. Me chame agora e vamos resolver isso juntos.</p>
+                <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg">Fale comigo</a>
+            </section>
+        </main>
+    </div>
+
+    <!-- PÁGINA DO GUIA MEI (INICIALMENTE OCULTA) -->
+    <div id="pagina-guia-mei" class="hidden">
+        <div id="ebook-banner-mei" class="bg-gray-800 text-white p-3 text-center relative transition-all duration-300">
+            <div class="container mx-auto flex justify-center items-center flex-wrap gap-2 sm:gap-4">
+                <p class="font-semibold text-sm sm:text-base"><span class="hidden sm:inline">🚀</span> Baixe nosso Ebook Gratuito: Guia Completo da Previdência Social para o MEI!</p>
+                <a href="https://drive.google.com/file/d/1slUVM3C5jGsymku_1IA9VmL0BMoM3wm9/view?usp=sharing" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-1 px-4 rounded-lg hover:bg-yellow-300 transition duration-300 shadow-md text-sm">Baixar Agora</a>
+            </div>
+            <button id="close-banner-btn-mei" class="absolute top-1/2 right-2 sm:right-4 -translate-y-1/2 text-white hover:text-yellow-300 p-1 rounded-full">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+        
+        <nav class="bg-white shadow-sm sticky top-16 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                 <div class="flex justify-center items-center h-12">
+                    <div class="flex items-baseline space-x-2 sm:space-x-4">
+                        <a href="#visao-geral-mei" class="nav-link-mei inactive-nav px-2 sm:px-3 py-2 rounded-md text-sm font-medium text-gray-600 border-b-2 hover:text-yellow-500">Visão Geral</a>
+                        <a href="#seus-beneficios" class="nav-link-mei inactive-nav px-2 sm:px-3 py-2 rounded-md text-sm font-medium text-gray-600 border-b-2 hover:text-yellow-500">Benefícios</a>
+                        <a href="#dependentes" class="nav-link-mei inactive-nav px-2 sm:px-3 py-2 rounded-md text-sm font-medium text-gray-600 border-b-2 hover:text-yellow-500">Dependentes</a>
+                        <a href="#riscos-mei" class="nav-link-mei inactive-nav px-2 sm:px-3 py-2 rounded-md text-sm font-medium text-gray-600 border-b-2 hover:text-yellow-500">Riscos</a>
+                    </div>
                 </div>
             </div>
-        </section>
+        </nav>
 
-        <section id="precos" class="mb-16 sm:mb-20">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10 text-gray-900">Tabela de Preços</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+            <section id="visao-geral-mei" class="pt-8 mb-12 md:mb-16 scroll-mt-20">
+                <div class="text-center mb-12"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Seu Guia Interativo para a Previdência do MEI</h2><p class="mt-4 text-lg leading-8 text-gray-600">Entenda seus direitos e obrigações de forma simples e garanta sua segurança e a de sua família.</p></div>
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md mb-12"><h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">O que é a contribuição do MEI (DAS)?</h3><p class="text-gray-600 mb-6">O Documento de Arrecadação do Simples Nacional (DAS) é seu boleto mensal que unifica impostos e, mais importante, sua contribuição para o INSS. É pagando o DAS em dia que você garante acesso à aposentadoria e outros auxílios. Para 2025, o salário mínimo projetado é de R$ 1.518,00. Calcule abaixo o valor da sua contribuição.</p><div class="flex flex-col md:flex-row gap-8"><div class="w-full md:w-1/2"><p class="font-semibold mb-2">1. Selecione sua atividade:</p><div class="flex flex-wrap gap-2 mb-4" id="activity-selector"><button data-activity="comercio" class="activity-btn bg-yellow-400 text-gray-900 px-4 py-2 rounded-lg shadow font-medium">Comércio/Indústria</button><button data-activity="servicos" class="activity-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium">Serviços</button><button data-activity="ambos" class="activity-btn bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium">Comércio e Serviços</button></div></div><div class="w-full md:w-1/2 bg-yellow-50 p-6 rounded-lg"><p class="font-semibold mb-2">2. Detalhamento do seu DAS mensal para 2025:</p><div class="space-y-3"><div class="flex justify-between items-center"><span class="text-gray-700">Contribuição INSS (5%):</span><span id="inss-value" class="font-bold text-lg text-gray-800">R$ 75,90</span></div><div class="flex justify-between items-center"><span id="tax-label" class="text-gray-700">Imposto (ICMS):</span><span id="tax-value" class="font-bold text-lg text-gray-800">R$ 1,00</span></div><hr class="my-2 border-yellow-200"><div class="flex justify-between items-center"><span class="text-gray-800 font-bold">Total a Pagar:</span><span id="total-value" class="font-bold text-2xl text-gray-900">R$ 76,90</span></div></div></div></div></div>
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-md"><h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Os Pilares da sua Proteção: Carência e Qualidade de Segurado</h3><p class="text-gray-600 mb-6">Entender estes dois conceitos é crucial. <span class="font-bold">Qualidade de Segurado</span> é seu vínculo ativo com o INSS, mantido com os pagamentos em dia. <span class="font-bold">Carência</span> é o número mínimo de pagamentos mensais para ter direito a um benefício. Atrasar pagamentos pode fazer você perder ambos.</p><div class="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8"><div class="text-center"><div class="mx-auto w-8 h-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center text-white font-bold shadow">✓</div><p class="mt-2 font-semibold">Início</p><p class="text-sm text-gray-500">Primeiro DAS pago em dia. Contagem de carência iniciada.</p></div><div class="text-center"><div class="mx-auto w-8 h-8 rounded-full bg-green-500 border-4 border-white flex items-center justify-center text-white font-bold shadow">✓</div><p class="mt-2 font-semibold">Pagando em Dia</p><p class="text-sm text-gray-500">Você mantém a Qualidade de Segurado e cumpre a Carência.</p></div><div class="text-center"><div class="mx-auto w-8 h-8 rounded-full bg-yellow-500 border-4 border-white flex items-center justify-center text-white font-bold shadow">!</div><p class="mt-2 font-semibold">Parou de Pagar</p><p class="text-sm text-gray-500">Entra no "Período de Graça". Você ainda está seguro por até 12 meses.</p></div><div class="text-center"><div class="mx-auto w-8 h-8 rounded-full bg-red-500 border-4 border-white flex items-center justify-center text-white font-bold shadow">✕</div><p class="mt-2 font-semibold">Mais de 12 meses</p><p class="text-sm text-gray-500">Perde a Qualidade de Segurado. Pagamentos atrasados não contam mais para carência.</p></div></div></div>
+            </section>
+            <section id="seus-beneficios" class="pt-16 mb-12 md:mb-16 scroll-mt-20"><div class="text-center mb-12"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Seus Benefícios Diretos</h2><p class="mt-4 text-lg leading-8 text-gray-600">Veja a rede de proteção que você constrói ao pagar seu DAS em dia.</p></div><div id="benefits-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div></section>
+            <section id="dependentes" class="pt-16 mb-12 md:mb-16 scroll-mt-20"><div class="text-center mb-12"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Proteção para sua Família</h2><p class="mt-4 text-lg leading-8 text-gray-600">Seu trabalho como MEI também garante segurança para quem você ama.</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"><div class="bg-white p-6 sm:p-8 rounded-xl shadow-md benefit-card"><h3 class="text-xl font-bold text-gray-900">Pensão por Morte</h3><p class="text-gray-600 mt-2">Garante renda aos seus dependentes em caso de falecimento. A família fica protegida desde o primeiro pagamento do DAS em dia.</p><div class="mt-4 bg-yellow-50 p-4 rounded-lg"><p class="text-gray-800"><span class="font-bold text-2xl">0 meses</span> de carência</p></div></div><div class="bg-white p-6 sm:p-8 rounded-xl shadow-md benefit-card"><h3 class="text-xl font-bold text-gray-900">Auxílio-Reclusão</h3><p class="text-gray-600 mt-2">Benefício pago à família do MEI de baixa renda que for preso em regime fechado. O valor é para o sustento dos dependentes.</p><div class="mt-4 bg-yellow-50 p-4 rounded-lg"><p class="text-gray-800"><span class="font-bold text-2xl">24 meses</span> de carência</p></div></div></div><div class="bg-white p-6 sm:p-8 rounded-xl shadow-md"><h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Calculadora Interativa: Duração da Pensão por Morte</h3><p class="text-gray-600 mb-6">Para o cônjuge ou companheiro(a), a duração da pensão pode variar conforme a idade no momento do falecimento do MEI (desde que o MEI tenha mais de 18 contribuições e o relacionamento mais de 2 anos). Use a barra abaixo para ver como funciona.</p><div class="flex flex-col md:flex-row gap-8 items-center"><div class="w-full md:w-1/2"><label for="age-slider" class="block mb-2 font-medium text-gray-900">Arraste para selecionar a idade do dependente:</label><input id="age-slider" type="range" min="20" max="50" value="35" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-yellow-500"><div class="flex justify-between text-xs text-gray-500 mt-1"><span>20</span><span>35</span><span>50+</span></div><p class="text-center mt-4 text-lg">Idade selecionada: <span id="age-display" class="font-bold text-yellow-600">35</span> anos</p></div><div class="w-full md:w-1/2"><div class="chart-container"><canvas id="pensionChart"></canvas></div></div></div></div></section>
+            <section id="riscos-mei" class="pt-16 scroll-mt-20"><div class="text-center mb-12"><h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Riscos & Dúvidas Frequentes</h2><p class="mt-4 text-lg leading-8 text-gray-600">Fique longe de problemas. Conheça as consequências de atrasar o DAS e tire suas principais dúvidas.</p></div><div class="bg-white p-6 sm:p-8 rounded-xl shadow-md mb-12"><h3 class="text-xl sm:text-2xl font-bold text-red-600 mb-4">⚠️ Atenção: Os Riscos de Atrasar o DAS</h3><ul class="space-y-4"><li class="flex items-start"><span class="text-red-500 mr-3 mt-1 flex-shrink-0">●</span><div><strong class="text-gray-900">Perda de Direitos:</strong> Ficar mais de 12 meses sem pagar leva à perda da qualidade de segurado. Você e sua família ficam desprotegidos.</div></li><li class="flex items-start"><span class="text-red-500 mr-3 mt-1 flex-shrink-0">●</span><div><strong class="text-gray-900">Prejuízo na Aposentadoria:</strong> Contribuições pagas com muito atraso não contam para a carência. Você paga o débito, mas não se aproxima da aposentadoria.</div></li><li class="flex items-start"><span class="text-red-500 mr-3 mt-1 flex-shrink-0">●</span><div><strong class="text-gray-900">CNPJ em Risco:</strong> A inadimplência prolongada pode levar ao cancelamento do seu CNPJ, e a dívida (com juros) é transferida para o seu CPF.</div></li></ul></div><div class="bg-white p-6 sm:p-8 rounded-xl shadow-md"><h3 class="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Perguntas Frequentes (FAQ)</h3><div id="faq-container-mei" class="space-y-4"></div></div></section>
+        </main>
+    </div>
+    
+    <!-- PÁGINA DO GUIA SCORE (INICIALMENTE OCULTA) -->
+    <div id="pagina-guia-score" class="hidden">
+        <nav class="bg-white shadow-sm sticky top-16 z-40">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-center h-16">
+                    <div class="flex items-baseline space-x-2 sm:space-x-4">
+                        <a href="#entendendo-score" class="nav-link-score px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-yellow-500">Entendendo</a>
+                        <a href="#plano-acao" class="nav-link-score px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-yellow-500">Plano de Ação</a>
+                        <a href="#mitos" class="nav-link-score px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-yellow-500">Mitos</a>
+                        <a href="#direitos" class="nav-link-score px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:text-yellow-500">Direitos</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+            <section id="hero-score" class="text-center py-12 md:py-16 scroll-mt-20">
+                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">Domine seu <span class="text-yellow-500">Score de Crédito</span></h1>
+                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Transforme sua vida financeira com este guia interativo. Entenda como sua pontuação funciona e aprenda o passo a passo para aumentá-la de forma consistente.</p>
+            </section>
+
+            <div id="content-score">
+                <section id="entendendo-score" class="py-12 md:py-16 scroll-mt-20">
+                    <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Desvendando o Score de Crédito</h2><p class="mt-3 max-w-xl mx-auto text-gray-600">Entenda o que é o score, por que ele é crucial e como os principais birôs de crédito do Brasil calculam essa pontuação.</p></div>
+                    <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg mb-12">
+                        <h3 class="text-2xl font-bold text-center mb-6">O que significa sua pontuação?</h3>
+                        <div id="score-simulator" class="w-full max-w-2xl mx-auto">
+                            <input type="range" id="score-range" min="0" max="1000" value="500" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg accent-yellow-500">
+                            <div class="mt-4 text-center">
+                                <span id="score-value" class="text-4xl font-extrabold text-yellow-600">500</span>
+                                <div id="score-classification" class="mt-2 text-xl font-bold"></div>
+                                <p id="score-description" class="mt-2 text-gray-600"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg"><h3 class="text-2xl font-bold text-center mb-6">A Anatomia do Score (Serasa)</h3><p class="text-center text-gray-600 mb-4">Passe o mouse sobre o gráfico para ver o peso de cada categoria e entender onde focar seus esforços.</p><div class="score-chart-container"><canvas id="scoreFactorsChart"></canvas></div></div>
+                        <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg"><h3 class="text-2xl font-bold text-center mb-6">Os Guardiões do Crédito</h3><p class="text-center text-gray-600 mb-6">Seu score pode ser diferente em cada birô. Conheça os 4 principais do Brasil.</p>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-gray-100 rounded-lg"><h4 class="font-bold text-lg text-gray-800">Serasa</h4><p class="text-sm text-gray-600">O mais conhecido, utiliza intensamente os dados do Cadastro Positivo.</p></div>
+                                <div class="p-4 bg-gray-100 rounded-lg"><h4 class="font-bold text-lg text-gray-800">Boa Vista (SCPC)</h4><p class="text-sm text-gray-600">Foca na pontualidade e ausência de inadimplência. Consulta via Consumidor Positivo.</p></div>
+                                <div class="p-4 bg-gray-100 rounded-lg"><h4 class="font-bold text-lg text-gray-800">SPC Brasil</h4><p class="text-sm text-gray-600">Valoriza a consistência dos pagamentos ao longo do tempo.</p></div>
+                                <div class="p-4 bg-gray-100 rounded-lg"><h4 class="font-bold text-lg text-gray-800">Quod</h4><p class="text-sm text-gray-600">Analisa em detalhe a frequência e duração dos atrasos e o comprometimento da renda.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
                 
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Declaração Simples de Imposto de Renda</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 59,90</p>
+                <section id="plano-acao" class="py-12 md:py-16 scroll-mt-20 bg-yellow-50 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Seu Plano de Ação para um Score de Excelência</h2><p class="mt-3 max-w-xl mx-auto text-gray-600">Siga este plano de 3 passos para limpar seu nome, construir bons hábitos e otimizar sua pontuação.</p></div>
+                    <div class="space-y-12">
+                        <div class="step"><div class="flex items-center mb-4"><div class="flex-shrink-0 bg-gray-800 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg">1</div><h3 class="ml-4 text-2xl font-bold">Missão "Nome Limpo": Renegocie suas Dívidas</h3></div><p class="mb-6 text-gray-600">O primeiro passo é quitar suas pendências. Use as plataformas de negociação para conseguir descontos.</p><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"><div class="bg-white p-6 rounded-xl shadow-md text-center"><h4 class="font-bold text-xl mb-2">Serasa Limpa Nome</h4><p class="text-gray-600 text-sm mb-3">A maior plataforma do país.</p><span class="inline-block bg-green-100 text-green-800 text-lg font-bold px-4 py-1 rounded-full">Até 90% OFF</span></div><div class="bg-white p-6 rounded-xl shadow-md text-center"><h4 class="font-bold text-xl mb-2">SPC Negociar Dívida</h4><p class="text-gray-600 text-sm mb-3">Flexibilidade de pagamento.</p><span class="inline-block bg-green-100 text-green-800 text-lg font-bold px-4 py-1 rounded-full">Até 99% OFF</span></div><div class="bg-white p-6 rounded-xl shadow-md text-center"><h4 class="font-bold text-xl mb-2">Outras Plataformas</h4><p class="text-gray-600 text-sm mb-3">Acordo Certo, QueroQuitar, etc.</p><span class="inline-block bg-green-100 text-green-800 text-lg font-bold px-4 py-1 rounded-full">Grandes Descontos</span></div></div><p class="mt-6 text-sm text-gray-500 text-center"><strong>Dica de Ouro:</strong> Após pagar, sempre peça o <strong>Termo de Quitação</strong>.</p></div>
+                        <div class="step"><div class="flex items-center mb-4"><div class="flex-shrink-0 bg-gray-800 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg">2</div><h3 class="ml-4 text-2xl font-bold">Construindo um Histórico de Campeão</h3></div><p class="mb-6 text-gray-600">Score alto é consequência de bons hábitos. Adote estas práticas para mostrar ao mercado que você é um bom pagador.</p><div id="habits-container" class="space-y-3"></div></div>
+                        <div class="step"><div class="flex items-center mb-4"><div class="flex-shrink-0 bg-gray-800 text-white rounded-full h-10 w-10 flex items-center justify-center font-bold text-lg">3</div><h3 class="ml-4 text-2xl font-bold">Otimização Fina: Técnicas Avançadas</h3></div><p class="mb-6 text-gray-600">Para ir além do básico, use estas estratégias para maximizar sua pontuação.</p><div class="grid md:grid-cols-3 gap-6"><div class="bg-white p-6 rounded-xl shadow-md"><h4 class="font-bold text-lg mb-2">Gerencie a Utilização de Crédito</h4><p class="text-gray-600 text-sm">Tente usar menos de 30% do limite total do seu cartão de crédito. Isso mostra que você não depende excessivamente do crédito.</p></div><div class="bg-white p-6 rounded-xl shadow-md"><h4 class="font-bold text-lg mb-2">Aumento de Limite: Use com Estratégia</h4><p class="text-gray-600 text-sm">Um limite maior pode diminuir sua taxa de utilização, o que é bom. Mas pedir com frequência pode te prejudicar.</p></div><div class="bg-white p-6 rounded-xl shadow-md"><h4 class="font-bold text-lg mb-2">Conexão Bancária (Open Finance)</h4><p class="text-gray-600 text-sm">Autorizar a Serasa a ver seus dados bancários pode ajudar a compor um perfil mais completo e aumentar seu score.</p></div></div></div>
                     </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Declaração Completa Imposto de Renda</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 199,90</p>
+                </section>
+                
+                <section id="mitos" class="py-12 md:py-16 scroll-mt-20">
+                    <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Mitos, Verdades e Golpes</h2><p class="mt-3 max-w-xl mx-auto text-gray-600">O mundo do score é cheio de desinformação. Clique nos cartões para descobrir o que é fato ou fake.</p></div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" id="myths-container"></div>
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-r-lg shadow-lg"><h3 class="text-2xl font-bold mb-2">ALERTA DE FRAUDE: O GOLPE DO SCORE!</h3><p class="text-red-900">Cuidado! Ninguém pode aumentar seu score em troca de pagamento. Promessas de "aumento mágico" via Pix ou qualquer tipo de cobrança são <strong>SEMPRE GOLPE</strong>.</p></div>
+                </section>
+                
+                <section id="direitos" class="py-12 md:py-16 scroll-mt-20 bg-gray-100 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-900">Seus Direitos e seu Bem-Estar</h2><p class="mt-3 max-w-xl mx-auto text-gray-600">Lidar com dívidas afeta a saúde mental, e é importante saber que você não está sozinho e tem direitos que o protegem.</p></div>
+                    <div class="grid md:grid-cols-2 gap-8 items-start">
+                        <div class="bg-white p-8 rounded-xl shadow-lg"><h3 class="text-2xl font-bold mb-4">A Psicologia da Dívida</h3><p class="text-gray-600 mb-6">O endividamento vai além dos números. Vergonha e ansiedade são comuns.</p><ul class="space-y-3"><li class="flex items-start"><span class="text-yellow-500 font-bold text-xl mr-3">✔</span><span><strong>Quebre o silêncio:</strong> Converse com pessoas de confiança.</span></li><li class="flex items-start"><span class="text-yellow-500 font-bold text-xl mr-3">✔</span><span><strong>Foque no controlável:</strong> Crie um plano de ação com pequenos passos.</span></li><li class="flex items-start"><span class="text-yellow-500 font-bold text-xl mr-3">✔</span><span><strong>Busque ajuda:</strong> Terapeutas e planejadores financeiros podem ajudar.</span></li></ul><div class="mt-6 text-center"><p class="text-5xl font-extrabold text-yellow-500">88%</p><p class="text-gray-600">dos endividados sentem vergonha da sua situação, segundo pesquisa da Serasa.</p></div></div>
+                        <div class="bg-white p-8 rounded-xl shadow-lg"><h3 class="text-2xl font-bold mb-4">Defenda-se de Práticas Abusivas</h3><p class="text-gray-600 mb-6">O Código de Defesa do Consumidor te protege contra cobranças vexatórias. Se seus direitos forem violados, reclame!</p><div class="overflow-x-auto"><table class="w-full text-left border-collapse"><thead><tr><th class="border-b-2 border-gray-200 p-3 bg-gray-50 font-bold">Canal</th><th class="border-b-2 border-gray-200 p-3 bg-gray-50 font-bold">Como Funciona</th></tr></thead><tbody><tr class="hover:bg-gray-50"><td class="border-b border-gray-200 p-3 font-bold text-gray-800">Consumidor.gov.br</td><td class="border-b border-gray-200 p-3 text-sm">Plataforma online para diálogo direto com empresas. É rápido e desburocratizado.</td></tr><tr class="hover:bg-gray-50"><td class="border-b border-gray-200 p-3 font-bold text-gray-800">Procon</td><td class="border-b border-gray-200 p-3 text-sm">Órgão público que media o conflito e pode aplicar multas. Use quando a resolução direta falhar.</td></tr></tbody></table></div></div>
                     </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Abertura de MEI (Micro Empreendedor Individual)</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 149,90</p>
-                    </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Revisão de Declaração de Imposto de Renda</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 39,90</p>
-                    </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Consultar Situação do CPF</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 19,90</p>
-                    </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold mb-2 text-gray-900">Consultar Situação do CNPJ</h3>
-                        <p class="text-4xl font-bold text-yellow-500 my-4">R$ 29,90</p>
-                    </div>
-                    <a href="https://wa.me/5581998721990" target="_blank" class="mt-4 bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-300">Contratar</a>
-                </div>
-
+                </section>
             </div>
-        </section>
-        <section class="bg-gray-800 text-white p-8 sm:p-12 rounded-lg mb-16 sm:mb-20">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10">É simples resolver sua situação</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div>
-                    <div class="text-3xl font-bold mb-2 text-yellow-400">1.</div>
-                    <h3 class="text-xl font-semibold mb-2">Contato Inicial</h3>
-                    <p class="opacity-80">Você me chama no WhatsApp e explica sua necessidade. O primeiro atendimento é sem compromisso.</p>
-                </div>
-                <div>
-                    <div class="text-3xl font-bold mb-2 text-yellow-400">2.</div>
-                    <h3 class="text-xl font-semibold mb-2">Análise e Documentos</h3>
-                    <p class="opacity-80">Eu oriento sobre os documentos necessários. Você envia tudo online, com total segurança e sigilo.</p>
-                </div>
-                <div>
-                    <div class="text-3xl font-bold mb-2 text-yellow-400">3.</div>
-                    <h3 class="text-xl font-semibold mb-2">Problema Resolvido</h3>
-                    <p class="opacity-80">Realizo o serviço e entrego o comprovante. Tudo resolvido de forma rápida e transparente.</p>
-                </div>
-            </div>
-        </section>
+        </main>
+    </div>
 
-        <section id="sobre" class="mb-16 sm:mb-20 flex flex-col md:flex-row items-center gap-10">
-            <div class="md:w-1/3">
-                <img src="assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/256x256/EFEFEF/374151?text=Perfil';">
-            </div>
-            <div class="md:w-2/3 text-center md:text-left">
-                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Atendimento com confiança e clareza</h2>
-                <p class="text-gray-600 mb-4">Eu sou Adelson Elias e realizo assessoria para imposto de renda há 14 anos. Meu objetivo no Declara Fácil é oferecer um serviço acessível, transparente e fácil, sem burocracia, onde você se sente seguro.</p>
-                <p class="text-gray-600">Ter a vida financeira em dia é uma conquista. Estou aqui para ser o parceiro que facilita essa jornada para você.</p>
-            </div>
-        </section>
 
-        <section class="text-center bg-white p-8 sm:p-12 rounded-lg shadow-xl">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Pronto para ficar em dia?</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">Não deixe para depois. Uma pendência simples pode se tornar um grande problema. Me chame agora e vamos resolver isso juntos.</p>
-            <a href="https://wa.me/5581998721990" target="_blank" class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-lg text-lg hover:bg-yellow-500 transition duration-300 shadow-lg">
-                Fale comigo
-            </a>
-        </section>
-
-    </main>
-
+    <!-- BOTÃO FLUTUANTE DE WHATSAPP -->
     <a href="https://wa.me/5581998721990" target="_blank" class="md:hidden fixed bottom-5 right-5 bg-green-500 hover:bg-green-600 rounded-full shadow-lg z-50 p-3 flex items-center justify-center transition-colors duration-300">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-whatsapp text-white" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943s-.182-.133-.38-.232z"/></svg>
     </a>
 
+    <!-- RODAPÉ UNIFICADO -->
     <footer class="bg-gray-800 text-white mt-12">
         <div class="container mx-auto px-6 py-6 text-center">
             <p class="font-bold">Declara Fácil</p>
@@ -190,5 +343,114 @@
         </div>
     </footer>
 
+    <script>
+        // Lógica para navegação entre páginas
+        function showPage(pageId) {
+            document.getElementById('pagina-principal').classList.add('hidden');
+            document.getElementById('pagina-guia-mei').classList.add('hidden');
+            document.getElementById('pagina-guia-score').classList.add('hidden');
+            
+            document.getElementById(pageId).classList.remove('hidden');
+            window.scrollTo(0, 0); // Rola para o topo ao trocar de página
+        }
+        
+        function closeMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu-main');
+            if (mobileMenu) {
+                mobileMenu.classList.add('hidden');
+            }
+        }
+
+        // Lógica dos Guias
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- LÓGICA GERAL ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button-main');
+            const mobileMenu = document.getElementById('mobile-menu-main');
+            if(mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+
+            // --- LÓGICA DO GUIA MEI ---
+            const MEI_BENEFITS = [
+                { title: 'Aposentadoria por Idade', description: 'Renda mensal vitalícia ao atingir a idade e o tempo de contribuição mínimos.', carnecia: '180 meses', details: '<strong>Requisitos:</strong><br>• Homens: 65 anos.<br>• Mulheres: 62 anos.<br>Ambos com 15 anos de contribuição.<br><strong>Valor:</strong> 1 salário mínimo.' },
+                { title: 'Auxílio por Incapacidade Temporária', description: 'Suporte financeiro caso você fique doente ou sofra um acidente e não possa trabalhar.', carnecia: '12 meses', details: 'Conhecido como auxílio-doença. <strong>Exceção:</strong> Acidentes de qualquer natureza ou doenças graves não exigem carência.' },
+                { title: 'Aposentadoria por Incapacidade Permanente', description: 'Benefício para casos de incapacidade total e definitiva para o trabalho.', carnecia: '12 meses', details: 'Conhecida como aposentadoria por invalidez. Mesmas regras de isenção de carência do auxílio-doença.' },
+                { title: 'Salário-Maternidade', description: 'Afastamento remunerado de 120 dias por parto, adoção ou guarda judicial.', carnecia: '10 meses', details: 'Garante o sustento da mãe empreendedora. O valor é de 1 salário mínimo mensal.' }
+            ];
+            const FAQ_DATA_MEI = [
+                { question: "Aposentado por invalidez pode ser MEI?", answer: "Não. A formalização como MEI é entendida pelo INSS como prova de que a pessoa recuperou a capacidade de trabalhar, o que leva ao cancelamento imediato da aposentadoria por invalidez." },
+                { question: "Quem trabalha de carteira assinada (CLT) pode ser MEI?", answer: "Sim, é permitido. As contribuições de ambas as atividades (CLT e MEI) se somam para a aposentadoria. O único ponto de atenção é que, em caso de demissão sem justa causa, o direito ao seguro-desemprego pode ser negado." },
+                { question: "Se eu parar de pagar o MEI, perco o que já contribuí?", answer: "Não. O tempo de contribuição nunca se perde. O que se perde temporariamente é a 'qualidade de segurado' (após 12 meses sem pagar) e a contagem de 'carência' para pagamentos feitos em atraso após essa perda." },
+                { question: "O valor do benefício do MEI sempre será de um salário mínimo?", answer: "Sim, se sua única contribuição for o pagamento padrão de 5% no DAS. O valor pode ser maior se você fizer a contribuição complementar de 15% ou se tiver outras contribuições, como de um emprego CLT." },
+                { question: "Se eu receber auxílio-doença, preciso continuar pagando o DAS?", answer: "Durante os meses em que estiver recebendo o benefício, a contribuição para o INSS não é obrigatória. No entanto, os impostos (ICMS/ISS) continuam sendo devidos. Você deve gerar um DAS específico no portal para pagar apenas o valor do imposto." }
+            ];
+            const dasData = { salarioMinimo: 1518.00, inssRate: 0.05, icms: 1.00, iss: 5.00 };
+            const inssValue = dasData.salarioMinimo * dasData.inssRate;
+            const activitySelector = document.getElementById('activity-selector');
+            const inssValueEl = document.getElementById('inss-value');
+            const taxLabelEl = document.getElementById('tax-label');
+            const taxValueEl = document.getElementById('tax-value');
+            const totalValueEl = document.getElementById('total-value');
+            const activityBtns = document.querySelectorAll('.activity-btn');
+            if (inssValueEl) inssValueEl.textContent = `R$ ${inssValue.toFixed(2).replace('.', ',')}`;
+            function updateDAS(activity) {
+                let tax = 0, taxLabel = '', total = inssValue;
+                activityBtns.forEach(btn => { btn.classList.remove('bg-yellow-400', 'text-gray-900', 'shadow'); btn.classList.add('bg-gray-200', 'text-gray-700'); });
+                const currentBtn = document.querySelector(`.activity-btn[data-activity="${activity}"]`);
+                if(currentBtn) { currentBtn.classList.add('bg-yellow-400', 'text-gray-900', 'shadow'); currentBtn.classList.remove('bg-gray-200', 'text-gray-700'); }
+                if (activity === 'comercio') { tax = dasData.icms; taxLabel = 'Imposto (ICMS)'; }
+                else if (activity === 'servicos') { tax = dasData.iss; taxLabel = 'Imposto (ISS)'; }
+                else if (activity === 'ambos') { tax = dasData.icms + dasData.iss; taxLabel = 'Impostos (ICMS + ISS)'; }
+                total += tax;
+                if(taxLabelEl) taxLabelEl.textContent = taxLabel;
+                if(taxValueEl) taxValueEl.textContent = `R$ ${tax.toFixed(2).replace('.', ',')}`;
+                if(totalValueEl) totalValueEl.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            }
+            if(activitySelector) { activitySelector.addEventListener('click', (e) => { if(e.target.matches('.activity-btn')) updateDAS(e.target.dataset.activity); }); updateDAS('comercio'); }
+            const benefitsGrid = document.getElementById('benefits-grid');
+            if(benefitsGrid) { MEI_BENEFITS.forEach(benefit => { const card = document.createElement('div'); card.className = 'bg-white p-6 sm:p-8 rounded-xl shadow-md benefit-card'; card.innerHTML = `<h3 class="text-xl font-bold text-gray-900">${benefit.title}</h3><p class="text-gray-600 mt-2 min-h-[60px]">${benefit.description}</p><div class="mt-4 bg-yellow-50 p-4 rounded-lg"><p class="text-gray-800"><span class="font-bold text-2xl">${benefit.carnecia}</span> de carência</p></div><div class="mt-4 text-sm text-gray-600">${benefit.details}</div>`; benefitsGrid.appendChild(card); }); }
+            const faqContainerMei = document.getElementById('faq-container-mei');
+            if(faqContainerMei) { FAQ_DATA_MEI.forEach((item) => { const faqItem = document.createElement('div'); faqItem.innerHTML = `<button class="faq-question w-full text-left flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 rounded-lg focus:outline-none"><span class="font-medium text-gray-800">${item.question}</span><span class="transform transition-transform duration-300 faq-arrow">▼</span></button><div class="accordion-content"><p class="p-4 text-gray-600 bg-gray-50 rounded-b-lg">${item.answer}</p></div>`; faqContainerMei.appendChild(faqItem); }); faqContainerMei.addEventListener('click', e => { const qb = e.target.closest('.faq-question'); if (qb) { const content = qb.nextElementSibling; const arrow = qb.querySelector('.faq-arrow'); if (content.style.maxHeight) { content.style.maxHeight = null; arrow.style.transform = 'rotate(0deg)'; } else { document.querySelectorAll('#faq-container-mei .accordion-content').forEach(el => el.style.maxHeight = null); document.querySelectorAll('#faq-container-mei .faq-arrow').forEach(el => el.style.transform = 'rotate(0deg)'); content.style.maxHeight = content.scrollHeight + "px"; arrow.style.transform = 'rotate(180deg)'; } } }); }
+            const ageSlider = document.getElementById('age-slider');
+            const ageDisplay = document.getElementById('age-display');
+            const pensionCtx = document.getElementById('pensionChart')?.getContext('2d');
+            let pensionChart;
+            function getPensionDuration(age) { if (age < 22) return { duration: 3, label: '3 anos' }; if (age <= 27) return { duration: 6, label: '6 anos' }; if (age <= 30) return { duration: 10, label: '10 anos' }; if (age <= 41) return { duration: 15, label: '15 anos' }; if (age <= 44) return { duration: 20, label: '20 anos' }; return { duration: 25, label: 'Vitalícia' }; }
+            function updatePensionChart(age) { if (!pensionCtx) return; const { duration, label } = getPensionDuration(age); if (pensionChart) { pensionChart.data.datasets[0].data[0] = duration; pensionChart.options.plugins.tooltip.callbacks.label = () => `Duração: ${label}`; pensionChart.update(); } else { pensionChart = new Chart(pensionCtx, { type: 'bar', data: { labels: ['Duração da Pensão'], datasets: [{ data: [duration], backgroundColor: ['#facc15'], borderColor: ['#eab308'], borderWidth: 1, borderRadius: 5 }] }, options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, max: 25, ticks: { callback: function(value) { if (value === 25) return 'Vitalícia'; if (value % 5 === 0 && value !== 0) return value + ' anos'; return ''; } } }, y: { display: false } }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: () => `Duração: ${label}` } } } } }); } }
+            if(ageSlider){ ageSlider.addEventListener('input', (e) => { const age = e.target.value; if(ageDisplay) ageDisplay.textContent = age >= 50 ? '45+' : age; updatePensionChart(age); }); updatePensionChart(ageSlider.value); }
+            const ebookBannerMei = document.getElementById('ebook-banner-mei');
+            const closeBannerBtnMei = document.getElementById('close-banner-btn-mei');
+            if (closeBannerBtnMei) { closeBannerBtnMei.addEventListener('click', () => { if(ebookBannerMei) ebookBannerMei.classList.add('hidden'); }); }
+            const navLinksMei = document.querySelectorAll('.nav-link-mei');
+            const sectionsMei = document.querySelectorAll('#pagina-guia-mei section');
+            const observerMei = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { navLinksMei.forEach(link => { link.classList.remove('active', 'font-bold', 'text-gray-900'); link.classList.add('inactive-nav', 'text-gray-600'); if (link.getAttribute('href').substring(1) === entry.target.id) { link.classList.add('active', 'font-bold', 'text-gray-900'); link.classList.remove('inactive-nav', 'text-gray-600'); } }); } }); }, { root: null, rootMargin: '-80px 0px -50% 0px', threshold: 0.1 });
+            sectionsMei.forEach(section => observerMei.observe(section));
+
+
+            // --- LÓGICA DO GUIA SCORE ---
+            const scoreData = { ranges: [ { limit: 300, classification: "Muito Baixo", color: "text-red-600", description: "Risco muito alto de inadimplência. Chance de obter crédito é muito baixa." }, { limit: 500, classification: "Baixo", color: "text-orange-500", description: "Risco considerável de inadimplência. Chance de obter crédito é baixa." }, { limit: 700, classification: "Bom", color: "text-yellow-500", description: "Baixo risco de inadimplência. Boas chances de obter crédito." }, { limit: 1000, classification: "Excelente", color: "text-green-600", description: "Risco muito baixo de inadimplência. Ótimas chances de obter crédito e boas condições." } ] };
+            const scoreRangeInput = document.getElementById('score-range');
+            const scoreValueEl = document.getElementById('score-value');
+            const scoreClassificationEl = document.getElementById('score-classification');
+            const scoreDescriptionEl = document.getElementById('score-description');
+            function updateScoreSimulator(score) { if(!scoreValueEl) return; scoreValueEl.textContent = score; const range = scoreData.ranges.find(r => score <= r.limit); if (range) { scoreClassificationEl.textContent = range.classification; scoreClassificationEl.className = `mt-2 text-xl font-bold ${range.color}`; scoreDescriptionEl.textContent = range.description; } }
+            if(scoreRangeInput) { scoreRangeInput.addEventListener('input', (e) => updateScoreSimulator(e.target.value)); updateScoreSimulator(scoreRangeInput.value); }
+            const scoreFactorsCtx = document.getElementById('scoreFactorsChart')?.getContext('2d');
+            if(scoreFactorsCtx) { new Chart(scoreFactorsCtx, { type: 'doughnut', data: { labels: ['Pagamentos em Dia (55%)', 'Dívidas Negativadas (33%)', 'Consultas ao CPF (6%)', 'Histórico de Crédito (6%)'], datasets: [{ label: 'Peso no Score', data: [55, 33, 6, 6], backgroundColor: ['#eab308', '#facc15', '#fef08a', '#fefce8'], borderColor: '#ffffff', borderWidth: 2, hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '60%' } }); }
+            const goodHabits = [ { title: 'Pague todas as contas em dia', description: 'É o fator de maior peso. Use débito automático ou lembretes para não esquecer.' }, { title: 'Mantenha seus dados atualizados', description: 'Informações corretas nos birôs de crédito são vistas como sinal de organização.' }, { title: 'Construa crédito (se for jovem)', description: 'Coloque contas no seu nome e use um cartão de crédito com limite baixo de forma responsável.' }, { title: 'Monitore seu score regularmente', description: 'Acompanhe sua evolução para entender o impacto das suas ações. É gratuito!' } ];
+            const habitsContainer = document.getElementById('habits-container');
+            if(habitsContainer) { habitsContainer.innerHTML = ''; goodHabits.forEach(habit => { const div = document.createElement('div'); div.className = 'bg-white p-4 rounded-lg shadow-sm flex items-start'; div.innerHTML = `<div class="flex-shrink-0 mt-1"><span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-green-100"><span class="font-medium text-green-700">✔</span></span></div><div class="ml-4"><h4 class="font-bold text-lg">${habit.title}</h4><p class="text-gray-600 text-sm">${habit.description}</p></div>`; habitsContainer.appendChild(div); }); }
+            const statements = [ { statement: 'Colocar CPF na nota fiscal aumenta o score.', isTrue: false, explanation: 'O CPF na nota é para controle de impostos e não tem relação com o score de crédito.' }, { statement: 'Pagar as contas em dia é o fator mais importante.', isTrue: true, explanation: 'A pontualidade nos pagamentos é o hábito com maior peso no cálculo da maioria dos birôs de crédito.' }, { statement: 'Consultar o próprio CPF diminui a pontuação.', isTrue: false, explanation: 'Você pode consultar seu score quantas vezes quiser. O que afeta são as consultas feitas por empresas.' }, { statement: 'Ter o nome limpo já garante um score alto.', isTrue: false, explanation: 'Não necessariamente. Um score alto depende de um bom histórico de crédito ativo, não apenas da ausência de dívidas.' }, { statement: 'Manter os dados cadastrais atualizados ajuda.', isTrue: true, explanation: 'Manter seus dados atualizados nos birôs é visto como sinal de organização e pode impactar positivamente.' }, { statement: 'É possível pagar para uma empresa aumentar seu score.', isTrue: false, explanation: 'Qualquer promessa de aumento de score mediante pagamento é GOLPE. A melhora vem apenas com bons hábitos.' } ];
+            const mythsContainer = document.getElementById('myths-container');
+            if(mythsContainer) { mythsContainer.innerHTML = ''; statements.forEach(item => { const card = document.createElement('div'); card.className = 'flip-card h-64 cursor-pointer'; const backBgColor = item.isTrue ? 'bg-green-600' : 'bg-red-600'; const backLabel = item.isTrue ? 'VERDADE' : 'FALSO'; card.innerHTML = `<div class="flip-card-inner"><div class="flip-card-front bg-yellow-400 text-gray-800 shadow-lg border border-yellow-500"><p class="text-gray-700 text-sm font-bold uppercase mb-2">AFIRMAÇÃO</p><p class="text-base sm:text-lg font-semibold">${item.statement}</p></div><div class="flip-card-back ${backBgColor} text-white shadow-lg"><p class="text-sm font-bold uppercase mb-2">${backLabel}</p><p class="text-base sm:text-lg font-semibold">${item.explanation}</p></div></div>`; card.addEventListener('click', () => card.classList.toggle('flipped')); mythsContainer.appendChild(card); }); }
+            const scoreSections = document.querySelectorAll('#pagina-guia-score section[id]');
+            const scoreNavLinks = document.querySelectorAll('nav a.nav-link-score');
+            window.addEventListener('scroll', () => { let current = ''; scoreSections.forEach(section => { const sectionTop = section.offsetTop; if (pageYOffset >= sectionTop - 120) { current = section.getAttribute('id'); } }); scoreNavLinks.forEach(link => { link.classList.remove('active'); if (link.getAttribute('href').includes(current)) { link.classList.add('active'); } }); });
+        });
+    </script>
 </body>
 </html>
