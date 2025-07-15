@@ -198,7 +198,7 @@
                 </div>
             </section>
             <section id="sobre" class="mb-16 sm:mb-20 flex flex-col md:flex-row items-center gap-10">
-                <div class="md:w-1/3"><img src="https://adehas25.github.io/declarafacil/assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/256x256/EFEFEF/374151?text=Perfil';"></div>
+                <div class="md:w-1/3"><img src="https://adehas25.github.io/declarafacil/assets/perfil.jpg" alt="Foto de Adelson Elias, especialista da Declara Fácil" class="rounded-full shadow-lg mx-auto w-48 h-48 md:w-64 md:h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/256x256/EFEFEF/374151?text=Perfil';">"></div>
                 <div class="md:w-2/3 text-center md:text-left"><h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-900">Atendimento com confiança e clareza</h2><p class="text-gray-600 mb-4">Eu sou Adelson Elias e realizo assessoria para imposto de renda há 14 anos. Meu objetivo no Declara Fácil é oferecer um serviço acessível, transparente e fácil, sem burocracia, onde você se sente seguro.</p><p class="text-gray-600">Ter a vida financeira em dia é uma conquista. Estou aqui para ser o parceiro que facilita essa jornada para você.</p></div>
             </section>
             <section class="text-center bg-white p-8 sm:p-12 rounded-lg shadow-xl">
@@ -427,8 +427,51 @@
             const scoreDescriptionEl = document.getElementById('score-description');
             function updateScoreSimulator(score) { if(!scoreValueEl) return; scoreValueEl.textContent = score; const range = scoreData.ranges.find(r => score <= r.limit); if (range) { scoreClassificationEl.textContent = range.classification; scoreClassificationEl.className = `mt-2 text-xl font-bold ${range.color}`; scoreDescriptionEl.textContent = range.description; } }
             if(scoreRangeInput) { scoreRangeInput.addEventListener('input', (e) => updateScoreSimulator(e.target.value)); updateScoreSimulator(scoreRangeInput.value); }
+            let scoreFactorsChartInstance;
             const scoreFactorsCtx = document.getElementById('scoreFactorsChart')?.getContext('2d');
-            if(scoreFactorsCtx) { new Chart(scoreFactorsCtx, { type: 'doughnut', data: { labels: ['Pagamentos em Dia (55%)', 'Dívidas Negativadas (33%)', 'Consultas ao CPF (6%)', 'Histórico de Crédito (6%)'], datasets: [{ label: 'Peso no Score', data: [55, 33, 6, 6], backgroundColor: ['#4299e1', '#6b46c1', '#f6e05e', '#ed8936'], borderColor: '#ffffff', borderWidth: 2, hoverOffset: 4 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '60%' } }); }
+            
+            function createOrUpdateScoreChart(isMobile) {
+                const legendPosition = isMobile ? 'bottom' : 'right';
+                if (scoreFactorsChartInstance) {
+                    scoreFactorsChartInstance.options.plugins.legend.position = legendPosition;
+                    scoreFactorsChartInstance.update();
+                } else if (scoreFactorsCtx) {
+                    scoreFactorsChartInstance = new Chart(scoreFactorsCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Pagamentos em Dia (55%)', 'Dívidas Negativadas (33%)', 'Consultas ao CPF (6%)', 'Histórico de Crédito (6%)'],
+                            datasets: [{
+                                label: 'Peso no Score',
+                                data: [55, 33, 6, 6],
+                                backgroundColor: ['#4299e1', '#6b46c1', '#f6e05e', '#ed8936'],
+                                borderColor: '#ffffff',
+                                borderWidth: 2,
+                                hoverOffset: 4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: true, // Always display the legend
+                                    position: legendPosition // Set position dynamically
+                                }
+                            },
+                            cutout: '60%'
+                        }
+                    });
+                }
+            }
+
+            // Initial chart creation based on screen size
+            createOrUpdateScoreChart(window.innerWidth < 768);
+
+            // Update chart legend position on window resize
+            window.addEventListener('resize', () => {
+                createOrUpdateScoreChart(window.innerWidth < 768);
+            });
+
             const goodHabits = [ { title: 'Pague todas as contas em dia', description: 'É o fator de maior peso. Use débito automático ou lembretes para não esquecer.' }, { title: 'Mantenha seus dados atualizados', description: 'Informações corretas nos birôs de crédito são vistas como sinal de organização.' }, { title: 'Construa crédito (se for jovem)', description: 'Coloque contas no seu nome e use um cartão de crédito com limite baixo de forma responsável.' }, { title: 'Monitore seu score regularmente', description: 'Acompanhe sua evolução para entender o impacto das suas ações. É gratuito!' } ];
             const habitsContainer = document.getElementById('habits-container');
             if(habitsContainer) { habitsContainer.innerHTML = ''; goodHabits.forEach(habit => { const div = document.createElement('div'); div.className = 'bg-white p-4 rounded-lg shadow-sm flex items-start'; div.innerHTML = `<div class="flex-shrink-0 mt-1"><span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-green-100"><span class="font-medium text-green-700">✔</span></span></div><div class="ml-4"><h4 class="font-bold text-lg">${habit.title}</h4><p class="text-gray-600 text-sm">${habit.description}</p></div>`; habitsContainer.appendChild(div); }); }
